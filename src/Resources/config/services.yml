@@ -1,0 +1,4 @@
+services:
+    controller.default:
+        class: App\Controller\DefaultController
+        arguments: ["@twig", "@doctrine"]
