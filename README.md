@@ -1,17 +1,22 @@
 Symfony Docker Bootstrap
 ========================
 
-This repository contains an installation of Symfony together with Docker to get you started.
+This repository contains a bootstrap installation of Symfony to get you started together with:
 
-Development
+- **Symfony 3.2**: Uses the microframework and puts all classes and configuration inside `src/` without the need of a custom bundle
+- **Docker setup**: it has a Mariadb, Nginx and PHP-FPM 7.1 container which can be started using `docker-compose`
+- **Testsuite setup**: testsuite script which runs all tests and generates reports which can be used in Jenkins or other tools
+- **Doctrine setup**: Doctrine is enabled by default and a temporary sqlite database is used for functional testing.
+
+New Proejct
 ===========
 
-Clone this repository.
-
-Install vendor packages
+Setup new project directory
 
 ```bash
-docker run --rm -v $(pwd):/app composer/composer install
+docker run --rm -v $(pwd):/app composer/composer \
+    create-project -s dev yoshz/symfony-docker-bootstrap project-dir
+cd project-dir
 ```
 
 Build Docker image
@@ -26,7 +31,7 @@ Start containers
 docker-compose up -d
 ```
 
-Create schema
+Create database schema
 
 ```bash
 docker-compose exec app bin/console doctrine:schema:create
