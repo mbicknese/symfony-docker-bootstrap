@@ -5,13 +5,24 @@ volumes:
     driver: local
 
 services:
+  db:
+    image: mariadb:10.1
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    volumes:
+    - "db:/var/lib/mysql"
   app:
     build: .
     environment:
-      DB_DRIVER: pdo_sqlite
-      DB_PATH: /data/data.sqlite
+      DB_DRIVER: pdo_mysql
+      DB_HOST: db
+      DB_NAME: symfony
+      DB_USER: symfony
+      DB_PASSWORD: symfony
     volumes:
-      - "db:/data"
       - ".:/var/www"
   web:
     image: nginx:1.11

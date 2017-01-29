@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController
@@ -33,7 +34,7 @@ class DefaultController
      */
     public function index()
     {
-        // test database connection
+        // test connection
         $this->doctrine->getManager()->getConnection()->connect();
 
         return new Response(

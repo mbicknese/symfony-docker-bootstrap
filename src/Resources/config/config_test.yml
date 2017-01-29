@@ -5,3 +5,11 @@ framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
+
+doctrine:
+    dbal:
+        default_connection: test
+        connections:
+            test:
+                driver:   pdo_sqlite
+                charset:  UTF8

@@ -26,6 +26,12 @@ Start containers
 docker-compose up -d
 ```
 
+Create schema
+
+```bash
+docker-compose exec app bin/console doctrine:schema:create
+```
+
 Usage
 -----
 
