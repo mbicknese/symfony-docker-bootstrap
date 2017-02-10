@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/../autoload.php';
 
-$env = $_ENV['SYMFONY_ENV'] ?? 'dev';
-$debug = $_ENV['SYMFONY_DEBUG'] ?? true;
+$env = getenv('SYMFONY_ENV');
+$debug = getenv('SYMFONY_DEBUG');
 
 if ($debug) {
     Symfony\Component\Debug\Debug::enable();

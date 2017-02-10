@@ -60,3 +60,14 @@ Make sure you installed the EditorConfig plugin.
 
 To **Start listening for PHP Debug Connections** (the topright phone icon) make sure you have configured a PHP Server
 called "docker" and add mapping on the root of project to `/var/www`.
+
+Production
+----------
+
+A different docker-compose file is used for production setup.
+
+To start the production stack run:
+
+```bash
+docker-compose -f docker-compose.prod.yml up --build
+```
