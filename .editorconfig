@@ -10,5 +10,9 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 
+[docker-compose*]
+indent_style = space
+indent_size = 2
+
 [*.{md,markdown}]
 trim_trailing_whitespace = false

@@ -7,8 +7,9 @@ This repository contains a bootstrap installation of Symfony to get you started 
 - **Docker setup**: it has a Mariadb, Nginx and PHP-FPM 7.1 container which can be started using `docker-compose`
 - **Testsuite setup**: testsuite script which runs all tests and generates reports which can be used in Jenkins or other tools
 - **Doctrine setup**: Doctrine is enabled by default and a temporary sqlite database is used for functional testing.
+- **Xdebug**: Remote debugging is enabled on development mode
 
-New Proejct
+New Project
 ===========
 
 Setup new project directory
@@ -52,3 +53,10 @@ Run testsuite (reports will be written to `reports` directory)
 docker-compose exec app bin/testsuite
 ```
 
+PHPStorm
+--------
+
+Make sure you installed the EditorConfig plugin.
+
+To **Start listening for PHP Debug Connections** (the topright phone icon) make sure you have configured a PHP Server
+called "docker" and add mapping on the root of project to `/var/www`.

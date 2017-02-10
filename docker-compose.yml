@@ -24,8 +24,12 @@ services:
       DB_NAME: symfony
       DB_USER: symfony
       DB_PASSWORD: symfony
+      SYMFONY_ENV: dev
+      SYMFONY_DEBUG: 1
+      PHP_IDE_CONFIG: "serverName=docker"
     volumes:
-      - ".:/var/www"
+    - ".:/var/www"
+    command: ["/usr/sbin/php-fpm", "-F", "-d", "zend_extension=xdebug.so"]
   web:
     image: nginx:1.11
     ports:

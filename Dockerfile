@@ -35,6 +35,8 @@ RUN locale-gen $LANG && \
     rm -rf /var/lib/apt/lists/* && \
     # Configure www-data user
     usermod -d /var/www -s /bin/bash -u ${USER_ID} www-data && \
+    # Configure Xdebug
+    echo "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\n" > /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini && \
     # Configure FPM
     sed -i 's@^error_log .*@error_log = /proc/self/fd/2@' /etc/php/${PHP_VERSION}/fpm/php-fpm.conf && \
     sed -i 's@^;clear_env .*@clear_env = no@' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf && \
@@ -48,7 +50,7 @@ WORKDIR /var/www
 USER www-data
 EXPOSE 9000
 
-ENV SYMFONY_ENV=dev
-ENV SYMFONY_DEBUG=1
+ENV SYMFONY_ENV=prod
+ENV SYMFONY_DEBUG=0
 
 CMD ["/usr/sbin/php-fpm", "-F"]
