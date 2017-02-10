@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\AppKernel;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -19,6 +20,7 @@ class BaseTestCase extends WebTestCase
     {
         parent::bootKernel($options);
 
+        /** @var EntityManager $em */
         $em = self::$kernel->getContainer()->get('doctrine')->getManager();
         $schemaTool = new SchemaTool($em);
         $metadata = $em->getMetadataFactory()->getAllMetadata();
