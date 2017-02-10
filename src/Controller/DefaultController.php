@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Item;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController
@@ -22,6 +22,7 @@ class DefaultController
      * DefaultController constructor.
      *
      * @param \Twig_Environment $twig
+     * @param Registry $doctrine
      */
     public function __construct(\Twig_Environment $twig, Registry $doctrine)
     {
@@ -34,11 +35,11 @@ class DefaultController
      */
     public function index()
     {
-        // test connection
-        $this->doctrine->getManager()->getConnection()->connect();
+        $items = $this->doctrine->getManager()->getRepository(Item::class)
+            ->findAll();
 
         return new Response(
-            $this->twig->render(':Default:index.html.twig')
+            $this->twig->render(':Default:index.html.twig', compact('items'))
         );
     }
 }
