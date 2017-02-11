@@ -1,4 +1,4 @@
-Symfony Docker Bootstrap
+Symfony Docker Bootstrap [![Build Status](https://travis-ci.org/yoshz/symfony-docker-bootstrap.svg?branch=master)](https://travis-ci.org/yoshz/symfony-docker-bootstrap)
 ========================
 
 This repository contains a bootstrap installation of Symfony to get you started together with:
@@ -9,8 +9,8 @@ This repository contains a bootstrap installation of Symfony to get you started 
 - **Doctrine setup**: Doctrine is enabled by default and a temporary sqlite database is used for functional testing.
 - **Xdebug**: Remote debugging is enabled on development mode
 
-New Project
-===========
+Installation
+============
 
 Setup new project directory
 
@@ -20,7 +20,7 @@ docker run --rm -v $(pwd):/app composer/composer \
 cd project-dir
 ```
 
-Build Docker image
+Build Docker images
 
 ```bash
 docker-compose build
@@ -38,20 +38,17 @@ Create database schema
 docker-compose exec app bin/console doctrine:schema:create
 ```
 
+Customise
+---------
+
+Update the following files with your project name and description:
+
+* composer.json
+* docker-compose{.prod}.yml
+
+
 Usage
------
-
-Run console commands
-
-```bash
-docker-compose exec app bin/console
-```
-
-Run testsuite (reports will be written to `reports` directory)
-
-```bash
-docker-compose exec app bin/testsuite
-```
+=====
 
 PHPStorm
 --------
@@ -61,13 +58,40 @@ Make sure you installed the EditorConfig plugin.
 To **Start listening for PHP Debug Connections** (the topright phone icon) make sure you have configured a PHP Server
 called "docker" and add mapping on the root of project to `/var/www`.
 
+
+Logs
+----
+
+Application logs are written to the container output and can be viewed by running:
+
+```bash
+docker-compose logs
+```
+
+CI
+--
+
+Travis configuration is included to test automatically if your project is stable.
+
+If you use another build tool configure the following tasks in your CI tool to build and test your project:
+
+```bash
+docker-compose build
+docker-compose run --rm app bin/testsuite
+```
+
+All the reports will be written to `reports` directory which can be processed again by another tool.
+
+
 Production
 ----------
 
 A different docker-compose file is used for production setup.
 
-To start the production stack run:
+Make sure that the Docker images are pulled or built.
+
+Start entire stack by running
 
 ```bash
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f docker-compose.prod.yml up
 ```
