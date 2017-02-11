@@ -15,9 +15,7 @@ services:
     volumes:
     - "db:/var/lib/mysql"
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: yoshz/symfony-docker-bootstrap-app
     environment:
       DB_DRIVER: pdo_mysql
       DB_HOST: db
@@ -25,9 +23,7 @@ services:
       DB_USER: symfony
       DB_PASSWORD: symfony
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.web
+    image: yoshz/symfony-docker-bootstrap-web
     ports:
     - "80:80"
     depends_on:
