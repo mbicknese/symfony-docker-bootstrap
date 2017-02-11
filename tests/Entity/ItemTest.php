@@ -10,12 +10,11 @@ class ItemTest extends BaseTestCase
 {
     public function testPersist()
     {
-        /** @var AppKernel $kernel */
         self::bootKernel();
+        self::createSchema();
         $manager = static::$kernel->getContainer()->get('doctrine')->getManager();
 
-        $item = new Item();
-        $item->setName('Test');
+        $item = Item::fromName('Test');
         $manager->persist($item);
         $manager->flush();
 

@@ -80,6 +80,6 @@ class AppKernel extends Kernel
         }
 
         // load the annotation routes
-        $routes->add('/', 'controller.default:index', 'home');
+        $routes->add('/', 'controller.item:index', 'home');
     }
 }

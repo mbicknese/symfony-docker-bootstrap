@@ -1,4 +1,8 @@
 services:
-  controller.default:
-    class: App\Controller\DefaultController
-    arguments: ["@twig", "@doctrine"]
+  controller.item:
+    class: App\Controller\ItemController
+    arguments: ["@twig", "@repository.item"]
+  repository.item:
+    class: Doctrine\ORM\EntityRepository
+    factory: ["@doctrine.orm.default_entity_manager", getRepository]
+    arguments: [ App\Entity\Item ]

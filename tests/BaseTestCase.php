@@ -12,14 +12,13 @@ class BaseTestCase extends WebTestCase
     protected static $class = AppKernel::class;
 
     /**
-     * Boots the Kernel for this test.
-     *
-     * @param array $options
+     * Creates schema
      */
-    protected static function bootKernel(array $options = array())
+    protected static function createSchema()
     {
-        parent::bootKernel($options);
-
+        if (self::$kernel === null) {
+            throw new \RuntimeException('Can not create schema before kernel boot');
+        }
         /** @var EntityManager $em */
         $em = self::$kernel->getContainer()->get('doctrine')->getManager();
         $schemaTool = new SchemaTool($em);

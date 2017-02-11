@@ -15,6 +15,24 @@ class Item
     protected $name;
 
     /**
+     * Item constructor.
+     * @param string $name
+     */
+    private function __construct(string $name)
+    {
+        $this->setName($name);
+    }
+
+    /**
+     * @param string $name
+     * @return Item
+     */
+    public static function fromName(string $name): self
+    {
+        return new self($name);
+    }
+
+    /**
      * @return int
      */
     public function getId(): int

@@ -7,6 +7,8 @@ BUILD_STATE=0
 
 function check_state {
     echo --------------------------------------------------------------------------------
+    echo $@
+    echo
     $@
     BUILD_STATE=$((BUILD_STATE+$?))
 }

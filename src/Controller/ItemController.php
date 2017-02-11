@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Repository\ItemRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController
+class ItemController
 {
     /**
      * @var \Twig_Environment
@@ -14,20 +15,20 @@ class DefaultController
     private $twig;
 
     /**
-     * @var Registry
+     * @var ItemRepository
      */
-    private $doctrine;
+    private $itemRepository;
 
     /**
      * DefaultController constructor.
      *
      * @param \Twig_Environment $twig
-     * @param Registry $doctrine
+     * @param ItemRepository $itemRepository
      */
-    public function __construct(\Twig_Environment $twig, Registry $doctrine)
+    public function __construct(\Twig_Environment $twig, ItemRepository $itemRepository)
     {
         $this->twig = $twig;
-        $this->doctrine = $doctrine;
+        $this->itemRepository = $itemRepository;
     }
 
     /**
@@ -35,11 +36,10 @@ class DefaultController
      */
     public function index()
     {
-        $items = $this->doctrine->getManager()->getRepository(Item::class)
-            ->findAll();
+        $items = $this->itemRepository->findAll();
 
         return new Response(
-            $this->twig->render(':Default:index.html.twig', compact('items'))
+            $this->twig->render('Item/index.html.twig', compact('items'))
         );
     }
 }
