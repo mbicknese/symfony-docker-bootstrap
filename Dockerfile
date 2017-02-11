@@ -36,6 +36,7 @@ RUN locale-gen $LANG && \
     # Configure www-data user
     usermod -d /var/www -s /bin/bash -u ${USER_ID} www-data && \
     # Configure Xdebug
+    rm /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini && \
     echo "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\n" > /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini && \
     # Configure FPM
     sed -i 's@^error_log .*@error_log = /proc/self/fd/2@' /etc/php/${PHP_VERSION}/fpm/php-fpm.conf && \
