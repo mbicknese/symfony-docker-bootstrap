@@ -68,6 +68,15 @@ Application logs are written to the container output and can be viewed by runnin
 docker-compose logs
 ```
 
+Testsuite
+---------
+
+The testsuite needs to be run inside the app container by running:
+
+```bash
+docker-compose exec app bin/testsuite
+```
+
 CI
 --
 

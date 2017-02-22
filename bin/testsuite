@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ "$DOCKER_HOST" ]; then
+    echo "Error! Please execute this file within the Docker container."
+    exit 1
+fi
+
 cd "$(dirname "$0")/.."
 rm -rf reports/*
 mkdir -p reports/php reports/php/coverage
