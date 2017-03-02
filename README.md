@@ -15,8 +15,8 @@ Installation
 Setup new project directory
 
 ```bash
-docker run --rm -v $(pwd):/app composer/composer \
-    create-project -s dev yoshz/symfony-docker-bootstrap project-dir
+docker run --rm -it --user $(id -u):$(id -g)  -v $(pwd):/app -v ~/.composer:/composer \
+    composer/composer create-project -s dev yoshz/symfony-docker-bootstrap project-dir
 cd project-dir
 ```
 
