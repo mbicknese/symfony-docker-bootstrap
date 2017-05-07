@@ -13,7 +13,7 @@ RUN locale-gen $LANG && \
     ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime && \
     apt-get update && \
     apt-get -yq install --no-install-recommends \
-        ca-certificates bzip2 git curl zip unzip acl && \
+        ca-certificates bzip2 git curl zip unzip acl patch && \
     # Install php and base packages
     echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" >> /etc/apt/sources.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C && \
@@ -29,8 +29,7 @@ RUN locale-gen $LANG && \
         php${PHP_VERSION}-json \
         php${PHP_VERSION}-sqlite \
         php${PHP_VERSION}-xdebug \
-        php${PHP_VERSION}-xml \
-        bzip2 git curl zip unzip acl && \
+        php${PHP_VERSION}-xml && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* && \
     # Configure www-data user
@@ -46,12 +45,21 @@ RUN locale-gen $LANG && \
     mkdir -p /run/php && \
     chown www-data. /run/php
 
-COPY . /var/www
+ADD server/run.sh /run.sh
+
 WORKDIR /var/www
+COPY bin bin
+COPY src src
+COPY var var
+COPY vendor vendor
+COPY web web
+COPY autoload.php autoload.php
+
+RUN chown www-data. var/*
 USER www-data
 EXPOSE 9000
 
 ENV SYMFONY_ENV=prod
 ENV SYMFONY_DEBUG=0
 
-CMD ["/usr/sbin/php-fpm", "-F"]
+CMD ["/run.sh"]

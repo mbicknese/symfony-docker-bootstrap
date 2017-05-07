@@ -32,7 +32,6 @@ services:
       PHP_IDE_CONFIG: "serverName=docker"
     volumes:
     - ".:/var/www"
-    command: ["/usr/sbin/php-fpm", "-F", "-d", "zend_extension=xdebug.so"]
   web:
     build:
       context: .

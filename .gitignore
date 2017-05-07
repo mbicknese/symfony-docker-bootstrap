@@ -1,3 +1,5 @@
+/var/cache/*
+!/var/cache/.gitkeep
 /.composer
 /reports
 /vendor
