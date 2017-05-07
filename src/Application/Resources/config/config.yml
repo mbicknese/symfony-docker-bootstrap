@@ -8,14 +8,22 @@ parameters:
   env(DB_PASSWORD): ~
   env(DB_PATH): ~
   locale: en
+  assets_version: v1
 
 framework:
   default_locale: "%locale%"
   translator:
     fallback: "%locale%"
   secret: "%env(APP_SECRET)%"
+  session:
+    name: sid
+    gc_maxlifetime: 86400
   templating:
     engines: ['twig']
+  form: ~
+  csrf_protection: ~
+  assets:
+    version: "%assets_version%"
 
 doctrine:
   dbal:
@@ -41,3 +49,6 @@ doctrine:
         type: yml
         dir: "%kernel.root_dir%/../Infrastructure/Doctrine/Mapping"
         prefix: "Domain"
+
+twig:
+  strict_variables: "%kernel.debug%"
