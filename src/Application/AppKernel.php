@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Application;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -39,7 +39,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        return dirname(dirname(__DIR__)) . '/var/cache/' .$this->getEnvironment();
     }
 
     /**
@@ -47,7 +47,7 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        return dirname(__DIR__).'/var/logs';
+        return dirname(dirname(__DIR__)) . '/var/logs';
     }
 
     /**
@@ -57,6 +57,8 @@ class AppKernel extends Kernel
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/Resources/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(__DIR__.'/Resources/config/repositories.yml');
+        $loader->load(__DIR__.'/Resources/config/controllers.yml');
         $loader->load(__DIR__.'/Resources/config/services.yml');
 
         // configure WebProfilerBundle only if the bundle is enabled

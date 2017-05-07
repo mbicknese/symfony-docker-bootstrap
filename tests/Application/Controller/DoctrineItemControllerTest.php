@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace Tests\Application\Controller;
 
-use App\Controller\ItemController;
-use App\Entity\Item;
-use App\Repository\ItemRepository;
-use App\Tests\BaseTestCase;
+use Application\Controller\ItemController;
+use Domain\Item\InMemoryItemRepository;
+use Domain\Item\Item;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Request;
+use Tests\BaseTestCase;
 
 class ItemControllerTest extends BaseTestCase
 {
@@ -25,20 +26,13 @@ class ItemControllerTest extends BaseTestCase
     {
         self::bootKernel();
         $twig = self::$kernel->getContainer()->get('twig');
-        $repository = new class extends ItemRepository {
-            public function __construct(){}
-            public function findAll()
-            {
-                return [
-                    Item::fromName('Item 1'),
-                    Item::fromName('Item 2'),
-                    Item::fromName('Item 3'),
-                    Item::fromName('Item 4'),
-                ];
-            }
-        };
+        $repository = new InMemoryItemRepository();
+        $repository->save(Item::fromName('Item 1'));
+        $repository->save(Item::fromName('Item 2'));
+        $repository->save(Item::fromName('Item 3'));
+        $repository->save(Item::fromName('Item 4'));
         $controller = new ItemController($twig, $repository);
-        $response = $controller->index();
+        $response = $controller->index(new Request());
         $crawler = new Crawler($response->getContent());
         $nodeList = $crawler->filter('ul>li');
 

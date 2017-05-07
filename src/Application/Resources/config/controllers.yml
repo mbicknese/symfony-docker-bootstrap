@@ -1,0 +1,4 @@
+services:
+  controller.item:
+    class: Application\Controller\ItemController
+    arguments: ["@twig", "@repository.item"]

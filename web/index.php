@@ -8,7 +8,7 @@ if ($debug) {
     Symfony\Component\Debug\Debug::enable();
 }
 
-$kernel = new App\AppKernel($env, $debug);
+$kernel = new Application\AppKernel($env, $debug);
 $kernel->loadClassCache();
 
 $request = Symfony\Component\HttpFoundation\Request::createFromGlobals();

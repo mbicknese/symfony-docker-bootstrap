@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests;
+namespace Tests;
 
-use App\AppKernel;
+use Application\AppKernel;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BaseTestCase extends WebTestCase
+abstract class BaseTestCase extends WebTestCase
 {
     protected static $class = AppKernel::class;
 

@@ -36,8 +36,8 @@ doctrine:
   orm:
     auto_generate_proxy_classes: "%kernel.debug%"
     mappings:
-      - name: app
+      - name: domain
         is_bundle: false
         type: yml
-        dir: "%kernel.root_dir%/Resources/config/doctrine"
-        prefix: "App\\Entity"
+        dir: "%kernel.root_dir%/../Infrastructure/Doctrine/Mapping"
+        prefix: "Domain"

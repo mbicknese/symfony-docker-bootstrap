@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+use Application\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -14,6 +15,6 @@ $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-d
 if ($debug) {
     Debug::enable();
 }
-$kernel = new App\AppKernel($env, $debug);
+$kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);

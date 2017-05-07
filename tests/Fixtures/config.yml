@@ -1,5 +1,0 @@
-App\Entity\Item:
-    mapping: App\Tests\Fixtures\Mapping\ItemMapper
-    repository:
-        class: repository.item
-        method: saveMany

@@ -1,7 +1,6 @@
-App\Entity\Item:
+Domain\Item\Item:
   type: entity
   table: items
-  repositoryClass: App\Repository\ItemRepository
   id:
     id:
       type: integer

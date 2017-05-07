@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Controller;
+namespace Application\Controller;
 
-use App\Entity\Item;
-use App\Repository\ItemRepository;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Domain\Item\FindItemsRequest;
+use Domain\Item\ItemRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 
 class ItemController
 {
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     private $twig;
 
@@ -22,10 +23,10 @@ class ItemController
     /**
      * DefaultController constructor.
      *
-     * @param \Twig_Environment $twig
+     * @param Twig_Environment $twig
      * @param ItemRepository $itemRepository
      */
-    public function __construct(\Twig_Environment $twig, ItemRepository $itemRepository)
+    public function __construct(Twig_Environment $twig, ItemRepository $itemRepository)
     {
         $this->twig = $twig;
         $this->itemRepository = $itemRepository;
@@ -34,9 +35,11 @@ class ItemController
     /**
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = $this->itemRepository->findAll();
+        $items = $this->itemRepository->findMany(new FindItemsRequest(
+            $request->query->get('page')
+        ));
 
         return new Response(
             $this->twig->render('Item/index.html.twig', compact('items'))
