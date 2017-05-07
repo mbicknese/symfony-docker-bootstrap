@@ -25,6 +25,7 @@ check_state ./vendor/bin/phploc \
     src
 
 check_state ./vendor/bin/phpcs --report=full \
+    --standard=ruleset.xml \
     --report-checkstyle=reports/php/checkstyle.xml \
     --standard=PSR2 \
     --extensions=php \
