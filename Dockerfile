@@ -1,19 +1,18 @@
 FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-ARG LANG=en_US.UTF-8
-ARG PHP_VERSION=7.1
-ARG TIMEZONE=UTC
-ARG USER_ID=501
+ENV LANG=en_US.UTF-8
+ENV PHP_VERSION=7.1
+ENV TIMEZONE=UTC
 
 # Configure locale and timezone and install base packages
-RUN locale-gen $LANG && \
+COPY locale.gen /etc/locale.gen
+RUN apt-get update && \
+    apt-get -yq install --no-install-recommends \
+        ca-certificates locales bzip2 git curl zip unzip acl && \
+    apt-get -y clean && \
     echo $TIMEZONE > /etc/timezone && \
     ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime && \
-    apt-get update && \
-    apt-get -yq install --no-install-recommends \
-        ca-certificates bzip2 git curl zip unzip acl patch && \
     # Install php and base packages
     echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" >> /etc/apt/sources.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C && \
@@ -32,8 +31,6 @@ RUN locale-gen $LANG && \
         php${PHP_VERSION}-xml && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* && \
-    # Configure www-data user
-    usermod -d /var/www -s /bin/bash -u ${USER_ID} www-data && \
     # Configure Xdebug
     rm /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini && \
     echo "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\n" > /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini && \
@@ -42,8 +39,7 @@ RUN locale-gen $LANG && \
     sed -i 's@^;clear_env .*@clear_env = no@' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf && \
     sed -i 's@^listen .*@listen = 0.0.0.0:9000@; s@^access.log .*@access.log = /proc/self/fd/2@' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf && \
     ln -sf /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm && \
-    mkdir -p /run/php && \
-    chown www-data. /run/php
+    mkdir -p /run/php
 
 ADD server/run.sh /run.sh
 
@@ -55,8 +51,6 @@ COPY vendor vendor
 COPY web web
 COPY autoload.php autoload.php
 
-RUN chown www-data. var/*
-USER www-data
 EXPOSE 9000
 
 ENV SYMFONY_ENV=prod
